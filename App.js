@@ -30,8 +30,8 @@ class App extends Component {
         <Fragment>
           <Router hideNavBar= "true">
             <Scene key="Root">
-              <Scene key="PageLogin" component={PageLogin} title="PageLogin" initial={true} />
-              <Scene key="PagePassword" component={PagePassword} title="PagePassword" />
+              <Scene key="PageLogin" component={PageLogin} title="Login Page" initial={true} />
+              <Scene key="PagePassword" component={PagePassword} title="Password Page" />
             </Scene>
           </Router>
         </Fragment>

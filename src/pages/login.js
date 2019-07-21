@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 // UI
-import { Container, Content, Text, Card, Header, Body, Button, Title, CardItem } from 'native-base';
+import { Container, Content, Text, Item, Input, Label, Button, Icon, View} from 'native-base';
 
 //navigation
 import { Actions } from 'react-native-router-flux';
@@ -15,7 +15,10 @@ import base64 from 'react-native-base64'
 class PageLogin extends Component {
 
   constructor(props) {
-		super(props);
+    super(props);
+    this.state = {
+      username: ''
+    }
 	}
 
   componentDidMount () {
@@ -25,25 +28,25 @@ class PageLogin extends Component {
     return(
       <Container>
         <Content padder>
-          <Card>
-            <CardItem>
-              <Body>
-                <Text>
-                  This is Page Login, Press button to goto page password
-                </Text>
-                <Text>
-                  {this.props.reduxState.username} - {this.props.reduxState.password}
-                </Text>
-                <Text>{base64.encode(this.props.reduxState.password)}</Text>
-              </Body>
-            </CardItem>
-          </Card>
-          <Button dark bordered style = {{alignSelf: 'center', margin: 30}}
+          <Text style = {{marginVertical: 20}}>
+            Please enter your github username and click next to continue! 
+          </Text>
+          <Item stackedLabel>
+            <Label>Username</Label>
+            <Input onChange={(event) => {
+              this.setState({username: event.nativeEvent.text});
+            }}/>
+          </Item>
+          <Button
+            iconRight
+            style = {{alignSelf: 'center', margin: 30}}
+            disabled = {!this.state.username}
             onPress= {() => {
               Actions.PagePassword();
-              this.props.setUsername('saafasfa');
+              this.props.setUsername(this.state.username);
             }}>
-            <Text>Goto Page Password</Text>
+            <Text>Next</Text>
+            <Icon name='arrow-forward' />
           </Button>
          </Content>
       </Container>
