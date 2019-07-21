@@ -1,8 +1,23 @@
 import React, { Component } from 'react';
+
+// UI
 import { Container, Content, Text, Card, Header, Body, Button, Title, CardItem } from 'native-base';
+
+//navigation
 import { Actions } from 'react-native-router-flux';
 
-export default class PageLogin extends Component {
+// redux
+import { connect } from 'react-redux';
+
+class PageLogin extends Component {
+
+  constructor(props) {
+		super(props);
+	}
+
+  componentDidMount () {
+  }
+
   render(){
     return(
       <Container>
@@ -17,7 +32,7 @@ export default class PageLogin extends Component {
             </CardItem>
           </Card>
           <Button dark bordered style = {{alignSelf: 'center', margin: 30}}
-            onPress= {() => {Actions.PagePassword(); }}>
+            onPress= {() => {console.log(this.props); }}>
             <Text>Goto Page Password</Text>
           </Button>
          </Content>
@@ -25,3 +40,9 @@ export default class PageLogin extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return { reduxState: state}
+};
+
+export default connect(mapStateToProps)(PageLogin);

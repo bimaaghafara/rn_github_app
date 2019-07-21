@@ -11,23 +11,31 @@ import {
   StyleSheet
 } from 'react-native';
 
+// Pages
 import PageLogin from './src/pages/login';
 import PagePassword from './src/pages/password';
 
+// redux
+import { Provider } from 'react-redux';
+import store from './src/redux/store';
+
+// navigation
 import { Router, Scene } from 'react-native-router-flux';
 
 class App extends Component {
   render(){
     console.disableYellowBox = true;
     return (
-      <Fragment>
-        <Router hideNavBar= "true">
-          <Scene key="Root">
-            <Scene key="PageLogin" component={PageLogin} title="PageLogin" initial={true} />
-            <Scene key="PagePassword" component={PagePassword} title="PagePassword" />
-          </Scene>
-        </Router>
-      </Fragment>
+      <Provider store={store}>
+        <Fragment>
+          <Router hideNavBar= "true">
+            <Scene key="Root">
+              <Scene key="PageLogin" component={PageLogin} title="PageLogin" initial={true} />
+              <Scene key="PagePassword" component={PagePassword} title="PagePassword" />
+            </Scene>
+          </Router>
+        </Fragment>
+      </Provider>
     );
   };
 }
