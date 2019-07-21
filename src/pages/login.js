@@ -8,6 +8,7 @@ import { Actions } from 'react-native-router-flux';
 
 // redux
 import { connect } from 'react-redux';
+import { setUsername } from '../redux/actions';
 
 class PageLogin extends Component {
 
@@ -28,11 +29,17 @@ class PageLogin extends Component {
                 <Text>
                   This is Page Login, Press button to goto page password
                 </Text>
+                <Text>
+                  {this.props.reduxState.username} - {this.props.reduxState.password}
+                </Text>
               </Body>
             </CardItem>
           </Card>
           <Button dark bordered style = {{alignSelf: 'center', margin: 30}}
-            onPress= {() => {console.log(this.props); }}>
+            onPress= {() => {
+              Actions.PagePassword();
+              this.props.setUsername('saafasfa');
+            }}>
             <Text>Goto Page Password</Text>
           </Button>
          </Content>
@@ -45,4 +52,12 @@ const mapStateToProps = (state) => {
   return { reduxState: state}
 };
 
-export default connect(mapStateToProps)(PageLogin);
+const mapDispatchToProps = (dispatch) => {
+	return {
+	  setUsername: (payload) => dispatch(
+			setUsername(payload)
+		)
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PageLogin);
