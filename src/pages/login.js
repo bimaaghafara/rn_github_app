@@ -10,6 +10,8 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setUsername } from '../redux/actions';
 
+import base64 from 'react-native-base64'
+
 class PageLogin extends Component {
 
   constructor(props) {
@@ -32,6 +34,7 @@ class PageLogin extends Component {
                 <Text>
                   {this.props.reduxState.username} - {this.props.reduxState.password}
                 </Text>
+                <Text>{base64.encode(this.props.reduxState.password)}</Text>
               </Body>
             </CardItem>
           </Card>
