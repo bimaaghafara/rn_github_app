@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 // UI
-import { Container, Content, Text, Item, Input, Label, Button, Icon, View} from 'native-base';
+import { Container, Content, Text, Item, Input, Label, Button, Icon} from 'native-base';
 
 //navigation
 import { Actions } from 'react-native-router-flux';
@@ -9,8 +9,6 @@ import { Actions } from 'react-native-router-flux';
 // redux
 import { connect } from 'react-redux';
 import { setUsername } from '../redux/actions';
-
-import base64 from 'react-native-base64'
 
 class PageLogin extends Component {
 

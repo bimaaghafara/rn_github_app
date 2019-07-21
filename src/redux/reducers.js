@@ -2,7 +2,7 @@ import {actionTypes} from './actions';
 
 const INITIAL_STATE = {
   username: 'uuuu',
-  password: 'pppp',
+  token: 'pppp',
   commits: [],
   nextCommits: [],
 };
@@ -14,7 +14,7 @@ const reducers = (state = INITIAL_STATE, action) => {
             ...state,
             username: action.payload
         }
-    case actionTypes.SET_PASSWORD:
+    case actionTypes.SET_TOKEN:
         return {
             ...state,
             password: action.payload
