@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { setPassword } from '../redux/actions';
 
 // 3rd lib
-import base64 from 'react-native-base64'
+import base64 from 'react-native-base64';
 import Axios from 'axios';
 
 class PagePassword extends Component {
@@ -39,7 +39,7 @@ class PagePassword extends Component {
       {note: 'Bimaaghafara React Native Github App', fingerprint: this.getUniqString()},
       {headers: {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
+      'Accept': 'application/vnd.github.v3+json',
       'Authorization': authorization
     }})
     .then(res => {

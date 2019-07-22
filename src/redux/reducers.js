@@ -2,7 +2,6 @@ import { actionTypes } from './actions';
 
 const INITIAL_STATE = {
 	username: '',
-	token: '',
 	commits: [],
 	nextCommits: [],
 };
