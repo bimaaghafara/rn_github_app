@@ -15,6 +15,7 @@ import {
 import PageLogin from './src/pages/login';
 import PagePassword from './src/pages/password';
 import PageRepository from './src/pages/repository';
+import PageCommits from './src/pages/commits';
 
 // redux
 import { Provider } from 'react-redux';
@@ -37,6 +38,7 @@ class App extends Component {
 							<Scene key="PageLogin" component={PageLogin} title="Login Page" initial={true} />
 							<Scene key="PagePassword" component={PagePassword} title="Password Page" />
 							<Scene key="PageRepository" component={PageRepository} title="Repository Page" />
+							<Scene key="PageCommits" component={PageCommits} title="Commits Page" />
 						</Scene>
 					</Router>
 				</Fragment>

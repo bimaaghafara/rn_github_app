@@ -23,8 +23,8 @@ class PageRepository extends Component {
         }
     }
 
-    fetchCommits(token, urlParams, reduxAction) {
-        Axios.get(
+    async fetchCommits(token, urlParams, reduxAction) {
+        await Axios.get(
         `https://api.github.com/repos/${this.state.repositoryName}/commits${urlParams}`,
         {
             headers: {
@@ -44,8 +44,9 @@ class PageRepository extends Component {
 
     async onSubmit() {
         const token = await AsyncStorage.getItem('token');
-        this.fetchCommits(token, '?page=1&per_page=10', 'setCommits');
-        this.fetchCommits(token, '?page=2&per_page=10', 'setNextCommits');
+        await this.fetchCommits(token, '?page=1&per_page=10', 'setCommits');
+        await this.fetchCommits(token, '?page=2&per_page=10', 'setNextCommits');
+        Actions.PageCommits();
     }
 
     render() {
@@ -67,13 +68,6 @@ class PageRepository extends Component {
                         disabled={!this.state.repositoryName}
                         onPress={() => {this.onSubmit()}}>
                         <Text>Next</Text>
-                        <Icon name='arrow-forward' />
-                    </Button><Button
-                        iconRight
-                        style={{ alignSelf: 'center', margin: 30 }}
-                        disabled={!this.state.repositoryName}
-                        onPress={() => {console.log(this.props.reduxState)}}>
-                        <Text>sfdfsd</Text>
                         <Icon name='arrow-forward' />
                     </Button>
                 </Content>
