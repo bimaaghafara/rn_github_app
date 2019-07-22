@@ -9,7 +9,7 @@ import { Actions } from 'react-native-router-flux';
 
 // redux
 import { connect } from 'react-redux';
-import { setCommits, setNextCommits, showLoader } from '../redux/actions';
+import { setCommits, setNextCommits, showLoader, setRepositoryName } from '../redux/actions';
 
 // 3rd lib
 import Axios from 'axios';
@@ -48,6 +48,7 @@ class PageRepository extends Component {
         const token = await AsyncStorage.getItem('token');
         await this.fetchCommits(token, '?page=1&per_page=10', 'setCommits');
         await this.fetchCommits(token, '?page=2&per_page=10', 'setNextCommits');
+        this.props.setRepositoryName(this.state.repositoryName);
         this.props.showLoader(false);
         Actions.PageCommits();
     }
@@ -90,6 +91,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         showLoader: (payload) => dispatch(showLoader(payload)),
+        setRepositoryName: (payload) => dispatch(setRepositoryName(payload)),
         setCommits: (payload) => dispatch(setCommits(payload)),
         setNextCommits: (payload) => dispatch(setNextCommits(payload))
     };

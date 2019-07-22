@@ -28,7 +28,7 @@ class PageCommits extends Component {
 
     async fetchCommits(token, urlParams, reduxAction) {
         Axios.get(
-        `https://api.github.com/repos/facebook/react-native/commits${urlParams}`,
+        `https://api.github.com/repos/${this.props.reduxState.repositoryName}/commits${urlParams}`,
         {
             headers: {
                 'Content-Type': 'application/json',
