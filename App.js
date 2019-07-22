@@ -25,7 +25,7 @@ import store from './src/redux/store';
 import { Router, Scene } from 'react-native-router-flux';
 
 // Uncomment this import code to see all the requests in the chrome Dev tools in the network tab
-import './fetchLogger';
+// import './fetchLogger';
 
 class App extends Component {
 	render() {
