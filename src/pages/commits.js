@@ -9,7 +9,7 @@ import { Actions } from 'react-native-router-flux';
 
 // redux
 import { connect } from 'react-redux';
-import { setCommits, setNextCommits, showLoader } from '../redux/actions';
+import { setPrevCommits, setCommits, setNextCommits, showLoader } from '../redux/actions';
 
 // 3rd lib
 import Axios from 'axios';
@@ -26,30 +26,44 @@ class PageCommits extends Component {
         }
     }
 
-    // fetchCommits(token, urlParams, reduxAction) {
-    //     Axios.get(
-    //     `https://api.github.com/repos/${this.state.repositoryName}/commits${urlParams}`,
-    //     {
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Accept': 'application/vnd.github.v3+json',
-    //             'Authorization': `Bearer ${token}`
-    //         }
-    //     })
-    //     .then(res => {
-    //         console.log(res, res.data);
-    //         this.props[reduxAction](res.data);
-    //     })
-    //     .catch(error => {
-    //         console.log(error);
-    //     });
-    // }
+    async fetchCommits(token, urlParams, reduxAction) {
+        Axios.get(
+        `https://api.github.com/repos/facebook/react-native/commits${urlParams}`,
+        {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/vnd.github.v3+json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(res => {
+            console.log(res, res.data);
+            this.props[reduxAction](res.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
 
-    // async onSubmit() {
-    //     const token = await AsyncStorage.getItem('token');
-    //     this.fetchCommits(token, '?page=1&per_page=10', 'setCommits');
-    //     this.fetchCommits(token, '?page=2&per_page=10', 'setNextCommits');
-    // }
+    async fetchPaginatedCommits() {
+        const token = await AsyncStorage.getItem('token');
+        await this.fetchCommits(token, `?page=${this.state.currentPage}&per_page=10`, 'setCommits');
+        await this.fetchCommits(token, `?page=${this.state.currentPage-1}&per_page=10`, 'sePrevtCommits');
+        await this.fetchCommits(token, `?page=${this.state.currentPage+1}&per_page=10`, 'setNextCommits');
+    }
+
+    async onClickNewer() {
+        await this.setState({currentPage: this.state.currentPage-1});
+        await this.fetchPaginatedCommits();
+        console.log(this.props.reduxState);
+    }
+
+    async onClickOlder() {
+        await this.setState({currentPage: this.state.currentPage+1});
+        await this.fetchPaginatedCommits();
+        console.log(this.props.reduxState);
+    }
+
     componentDidMount() {
         console.log(this.props.reduxState);
     }
@@ -82,11 +96,19 @@ class PageCommits extends Component {
                     )}
                     
 					<View style={{flexDirection:'row', justifyContent:'center', margin:20}}>
-						<Button disabled={this.state.prevPage === 0} style={{margin: 5}} iconLeft>
+						<Button
+                            // disabled={this.state.reduxState.prevCommits}
+                            style={{margin: 5}} iconLeft
+                            onPress={() => {this.onClickNewer()}}
+                        >
 							<Icon name='arrow-back'/>
 							<Text>Newer</Text>
 						</Button>
-						<Button style={{margin: 5}} iconRight>
+						<Button
+                            // disabled={this.state.reduxState.nextCommits}
+                            style={{margin: 5}} iconRight
+                            onPress={() => {this.onClickOlder()}}
+                        >
 							<Text>Older</Text>
 							<Icon name='arrow-forward'/>
 						</Button>
@@ -104,6 +126,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         showLoader: (payload) => dispatch(showLoader(payload)),
+        setPrevCommits: (payload) => dispatch(setPrevCommits(payload)),
         setCommits: (payload) => dispatch(setCommits(payload)),
         setNextCommits: (payload) => dispatch(setNextCommits(payload))
     };

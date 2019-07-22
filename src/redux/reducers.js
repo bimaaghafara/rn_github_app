@@ -3,6 +3,7 @@ import { actionTypes } from './actions';
 const INITIAL_STATE = {
 	showLoader: false,
 	username: '',
+	prevCommits: [],
 	commits: [],
 	nextCommits: [],
 };
@@ -18,6 +19,11 @@ const reducers = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				username: action.payload
+			}
+		case actionTypes.SET_PREV_COMMITS:
+			return {
+				...state,
+				prevCommits: action.payload
 			}
 		case actionTypes.SET_COMMITS:
 			return {
