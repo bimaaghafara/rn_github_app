@@ -45,6 +45,7 @@ class PagePassword extends Component {
     .then(res => {
       console.log(res, res.data.token);
       AsyncStorage.setItem('token', res.data.token);
+      Actions.PageRepository();
     })
     .catch(error =>{
       if (error.response) {
@@ -81,11 +82,7 @@ class PagePassword extends Component {
             iconRight
             style = {{alignSelf: 'center', margin: 30}}
             disabled = {!this.state.password}
-            onPress= {() => {
-              this.onSubmit();
-              // Actions.PagePassword();
-              // this.props.setUsername(this.state.username);
-            }}>
+            onPress= {() => {this.onSubmit()}}>
             <Text>Submit</Text>
             <Icon type='AntDesign' name='login' />
           </Button>
