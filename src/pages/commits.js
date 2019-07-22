@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 
 // UI
-import { Container, Content, Text, ListItem, Left, Thumbnail, Body, Right } from 'native-base';
+import { Container, Content, Text, ListItem, Left, Thumbnail, Body, Right, View, Button, Icon } from 'native-base';
 
 //navigation
 import { Actions } from 'react-native-router-flux';
@@ -80,6 +80,17 @@ class PageCommits extends Component {
                             </Right>
                       </ListItem>
                     )}
+                    
+					<View style={{flexDirection:'row', justifyContent:'center', margin:20}}>
+						<Button disabled={this.state.prevPage === 0} style={{margin: 5}} iconLeft>
+							<Icon name='arrow-back'/>
+							<Text>Newer</Text>
+						</Button>
+						<Button style={{margin: 5}} iconRight>
+							<Text>Older</Text>
+							<Icon name='arrow-forward'/>
+						</Button>
+					</View>
                 </Content>
             </Container>
         );
