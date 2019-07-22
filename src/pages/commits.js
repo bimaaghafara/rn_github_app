@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 
 // UI
-import { Container, Content, Text, Item, Input, Label, Button, Icon } from 'native-base';
+import { Container, Content, Text, ListItem, Left, Thumbnail, Body, Right } from 'native-base';
 
 //navigation
 import { Actions } from 'react-native-router-flux';
@@ -60,6 +60,21 @@ class PageCommits extends Component {
                     <Text style={{ marginVertical: 20 }}>
                         Commit History
                     </Text>
+                    {this.props.reduxState.commits.map((commit, index) => 
+                        <ListItem avatar key={index}>
+                            <Left>
+                                <Thumbnail source={{ uri: commit.author.avatar_url }} />
+                            </Left>
+                            <Body>
+                                <Text>{commit.author.login}</Text>
+                                <Text note>{commit.commit.message}</Text>
+                            </Body>
+                            <Right>
+                                <Text note>{new Date(commit.commit.author.date).toLocaleDateString()}</Text>
+                                <Text note>{new Date(commit.commit.author.date).toLocaleTimeString()}</Text>
+                            </Right>
+                      </ListItem>
+                    )}
                 </Content>
             </Container>
         );
