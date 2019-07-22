@@ -19,9 +19,6 @@ class PageLogin extends Component {
     }
 	}
 
-  componentDidMount () {
-  }
-
   render(){
     return(
       <Container>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Alert} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 // UI
 import { Container, Content, Text, Item, Input, Label, Button, Icon} from 'native-base';
@@ -41,7 +42,10 @@ class PagePassword extends Component {
       'Accept': 'application/json',
       'Authorization': authorization
     }})
-    .then(res => console.log(res))
+    .then(res => {
+      console.log(res, res.data.token);
+      AsyncStorage.setItem('token', res.data.token);
+    })
     .catch(error =>{
       if (error.response) {
         console.log(error.response.status);
