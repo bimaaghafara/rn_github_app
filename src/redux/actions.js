@@ -1,6 +1,5 @@
 export const actionTypes = {
     SET_USERNAME: 'SET_USERNAME',
-    SET_TOKEN: 'SET_TOKEN',
     SET_COMMITS: 'SET_COMMITS',
     SET_NEXT_COMMITS: 'SET NEXT_COMMITS'
 }
@@ -12,9 +11,16 @@ export const setUsername = (payload) => {
 	}
 }
 
-export const setToken = (payload) => {
+export const setCommits = (payload) => {
 	return {
-		type: actionTypes.SET_TOKEN,
+		type: actionTypes.SET_COMMITS,
+		payload: payload 
+	}
+}
+
+export const setNextCommits = (payload) => {
+	return {
+		type: actionTypes.SET_NEXT_COMMITS,
 		payload: payload 
 	}
 }
