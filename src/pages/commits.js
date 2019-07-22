@@ -50,18 +50,21 @@ class PageCommits extends Component {
         await this.fetchCommits(token, `?page=${this.state.currentPage}&per_page=10`, 'setCommits');
         await this.fetchCommits(token, `?page=${this.state.currentPage-1}&per_page=10`, 'setPrevCommits');
         await this.fetchCommits(token, `?page=${this.state.currentPage+1}&per_page=10`, 'setNextCommits');
+        this.props.showLoader(false)
     }
 
     async onClickNewer() {
+        this.props.showLoader(true)
         await this.setState({currentPage: this.state.currentPage-1});
         await this.fetchPaginatedCommits();
-        console.log(this.props.reduxState);
+        // console.log(this.props.reduxState);
     }
 
     async onClickOlder() {
+        this.props.showLoader(true)
         await this.setState({currentPage: this.state.currentPage+1});
         await this.fetchPaginatedCommits();
-        console.log(this.props.reduxState);
+        // console.log(this.props.reduxState);
     }
 
     componentDidMount() {
