@@ -80,15 +80,15 @@ class PageCommits extends Component {
                 />
                 <Content padder>
                     <Text style={{ marginVertical: 20 }}>
-                        Commit History
+                        Repository: {this.props.reduxState.repositoryName}
                     </Text>
                     {this.props.reduxState.commits.map((commit, index) => 
                         <ListItem avatar key={index}>
                             <Left>
-                                <Thumbnail source={{ uri: commit.author.avatar_url }} />
+                                <Thumbnail style={{backgroundColor: '#eee'}} source={{ uri: (commit.author || {}).avatar_url }} />
                             </Left>
-                            <Body>
-                                <Text>{commit.author.login}</Text>
+                            <Body style={{minHeight: 75}}>
+                                <Text>{commit.commit.author.name}</Text>
                                 <Text note>{commit.commit.message}</Text>
                             </Body>
                             <Right>
