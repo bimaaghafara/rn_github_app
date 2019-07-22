@@ -48,7 +48,7 @@ class PageCommits extends Component {
     async fetchPaginatedCommits() {
         const token = await AsyncStorage.getItem('token');
         await this.fetchCommits(token, `?page=${this.state.currentPage}&per_page=10`, 'setCommits');
-        await this.fetchCommits(token, `?page=${this.state.currentPage-1}&per_page=10`, 'sePrevtCommits');
+        await this.fetchCommits(token, `?page=${this.state.currentPage-1}&per_page=10`, 'setPrevCommits');
         await this.fetchCommits(token, `?page=${this.state.currentPage+1}&per_page=10`, 'setNextCommits');
     }
 
@@ -97,7 +97,7 @@ class PageCommits extends Component {
                     
 					<View style={{flexDirection:'row', justifyContent:'center', margin:20}}>
 						<Button
-                            // disabled={this.state.reduxState.prevCommits}
+                            disabled={this.props.reduxState.prevCommits.length === 0}
                             style={{margin: 5}} iconLeft
                             onPress={() => {this.onClickNewer()}}
                         >
@@ -105,7 +105,7 @@ class PageCommits extends Component {
 							<Text>Newer</Text>
 						</Button>
 						<Button
-                            // disabled={this.state.reduxState.nextCommits}
+                            disabled={this.props.reduxState.nextCommits.length === 0}
                             style={{margin: 5}} iconRight
                             onPress={() => {this.onClickOlder()}}
                         >
@@ -113,6 +113,7 @@ class PageCommits extends Component {
 							<Icon name='arrow-forward'/>
 						</Button>
 					</View>
+
                 </Content>
             </Container>
         );
