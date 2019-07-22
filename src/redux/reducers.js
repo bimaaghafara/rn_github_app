@@ -1,6 +1,7 @@
 import { actionTypes } from './actions';
 
 const INITIAL_STATE = {
+	showLoader: false,
 	username: '',
 	commits: [],
 	nextCommits: [],
@@ -8,6 +9,11 @@ const INITIAL_STATE = {
 
 const reducers = (state = INITIAL_STATE, action) => {
 	switch (action.type) {
+		case actionTypes.SHOW_LOADER:
+			return {
+				...state,
+				showLoader: action.payload
+			}
 		case actionTypes.SET_USERNAME:
 			return {
 				...state,

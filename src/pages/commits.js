@@ -9,10 +9,11 @@ import { Actions } from 'react-native-router-flux';
 
 // redux
 import { connect } from 'react-redux';
-import { setCommits, setNextCommits } from '../redux/actions';
+import { setCommits, setNextCommits, showLoader } from '../redux/actions';
 
 // 3rd lib
 import Axios from 'axios';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 class PageCommits extends Component {
 
@@ -56,6 +57,10 @@ class PageCommits extends Component {
     render() {
         return (
             <Container>
+                <Spinner
+                visible={this.props.reduxState.showLoader}
+                textContent={'Loading...'}
+                />
                 <Content padder>
                     <Text style={{ marginVertical: 20 }}>
                         Commit History
@@ -87,6 +92,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        showLoader: (payload) => dispatch(showLoader(payload)),
         setCommits: (payload) => dispatch(setCommits(payload)),
         setNextCommits: (payload) => dispatch(setNextCommits(payload))
     };

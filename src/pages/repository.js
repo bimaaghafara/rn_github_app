@@ -9,10 +9,11 @@ import { Actions } from 'react-native-router-flux';
 
 // redux
 import { connect } from 'react-redux';
-import { setCommits, setNextCommits } from '../redux/actions';
+import { setCommits, setNextCommits, showLoader } from '../redux/actions';
 
 // 3rd lib
 import Axios from 'axios';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 class PageRepository extends Component {
 
@@ -43,15 +44,21 @@ class PageRepository extends Component {
     }
 
     async onSubmit() {
+        this.props.showLoader(true);
         const token = await AsyncStorage.getItem('token');
         await this.fetchCommits(token, '?page=1&per_page=10', 'setCommits');
         await this.fetchCommits(token, '?page=2&per_page=10', 'setNextCommits');
+        this.props.showLoader(false);
         Actions.PageCommits();
     }
 
     render() {
         return (
             <Container>
+                <Spinner
+                    visible={this.props.reduxState.showLoader}
+                    textContent={'Loading...'}
+                />
                 <Content padder>
                     <Text style={{ marginVertical: 20 }}>
                         Please enter repository name and click submit to browse commits history!
@@ -82,6 +89,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        showLoader: (payload) => dispatch(showLoader(payload)),
         setCommits: (payload) => dispatch(setCommits(payload)),
         setNextCommits: (payload) => dispatch(setNextCommits(payload))
     };

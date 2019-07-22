@@ -1,7 +1,15 @@
 export const actionTypes = {
+	SHOW_LOADER: 'SHOW_LOADER',
     SET_USERNAME: 'SET_USERNAME',
     SET_COMMITS: 'SET_COMMITS',
-    SET_NEXT_COMMITS: 'SET NEXT_COMMITS'
+	SET_NEXT_COMMITS: 'SET_NEXT_COMMITS'
+}
+
+export const showLoader = (payload) => {
+	return {
+		type: actionTypes.SHOW_LOADER,
+		payload: payload 
+	}
 }
 
 export const setUsername = (payload) => {

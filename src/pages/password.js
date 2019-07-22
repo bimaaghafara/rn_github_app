@@ -10,11 +10,12 @@ import { Actions } from 'react-native-router-flux';
 
 // redux
 import { connect } from 'react-redux';
-import { setPassword } from '../redux/actions';
+import { setPassword, showLoader } from '../redux/actions';
 
 // 3rd lib
 import base64 from 'react-native-base64';
 import Axios from 'axios';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 class PagePassword extends Component {
 
@@ -32,9 +33,10 @@ class PagePassword extends Component {
     return Date.now().toString(32) + randomInt.toString(32);
   }
 
-  onSubmit() {
+  async onSubmit() {
     const authorization = `Basic ${base64.encode(this.props.reduxState.username+':'+this.state.password)}`; 
-    Axios.post(
+    this.props.showLoader(true);
+    await Axios.post(
       'https://api.github.com/authorizations',
       {note: 'Bimaaghafara React Native Github App', fingerprint: this.getUniqString()},
       {headers: {
@@ -63,11 +65,16 @@ class PagePassword extends Component {
       }
       console.log(error.config);
     });
+    this.props.showLoader(false);
   }
   
   render(){
     return(
       <Container>
+        <Spinner
+          visible={this.props.reduxState.showLoader}
+          textContent={'Loading...'}
+        />
         <Content padder>
           <Text style = {{marginVertical: 20}}>
             Please enter your github password and click submit to continue! 
@@ -98,9 +105,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-	  setPassword: (payload) => dispatch(
-			setPassword(payload)
-		)
+	  showLoader: (payload) => dispatch(showLoader(payload)),
+	  setPassword: (payload) => dispatch(setPassword(payload))
 	};
 };
 
