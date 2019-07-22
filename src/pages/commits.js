@@ -79,6 +79,14 @@ class PageCommits extends Component {
                 textContent={'Loading...'}
                 />
                 <Content padder>
+                    
+                    <Button style={{alignSelf: 'flex-end'}} iconLeft danger rounded onPress={() => {
+                        AsyncStorage.removeItem('token');
+                        Actions.reset('PageLogin')}}>
+                        <Icon name='home' />
+                        <Text>Logout</Text>
+                    </Button>
+
                     <Text style={{ marginVertical: 20 }}>
                         Repository: {this.props.reduxState.repositoryName}
                     </Text>
