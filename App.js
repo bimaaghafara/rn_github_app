@@ -22,6 +22,9 @@ import store from './src/redux/store';
 // navigation
 import { Router, Scene } from 'react-native-router-flux';
 
+// Uncomment this import code to see all the requests in the chrome Dev tools in the network tab
+import './fetchLogger';
+
 class App extends Component {
   render(){
     console.disableYellowBox = true;
@@ -39,11 +42,5 @@ class App extends Component {
     );
   };
 }
-
-const styles = StyleSheet.create({
-  Content: {
-    'padding': 8
-  }
-});
 
 export default App;

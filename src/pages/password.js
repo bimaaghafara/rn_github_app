@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Alert} from 'react-native';
 
 // UI
 import { Container, Content, Text, Item, Input, Label, Button, Icon} from 'native-base';
@@ -12,6 +13,7 @@ import { setPassword } from '../redux/actions';
 
 // 3rd lib
 import base64 from 'react-native-base64'
+import Axios from 'axios';
 
 class PagePassword extends Component {
 
@@ -20,6 +22,42 @@ class PagePassword extends Component {
     this.state = {
       password: ''
     }
+  }
+
+  getUniqString() {
+    const min = 1;
+    const max = 9876543210;
+    const randomInt = Math.floor(Math.random()*(max-min)) + min;
+    return Date.now().toString(32) + randomInt.toString(32);
+  }
+
+  onSubmit() {
+    const authorization = `Basic ${base64.encode(this.props.reduxState.username+':'+this.state.password)}`; 
+    Axios.post(
+      'https://api.github.com/authorizations',
+      {note: 'Bimaaghafara React Native Github App', fingerprint: this.getUniqString()},
+      {headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': authorization
+    }})
+    .then(res => console.log(res))
+    .catch(error =>{
+      if (error.response) {
+        console.log(error.response.status);
+        if (error.response.status === 401) {
+          Alert.alert(
+            'Error',
+            'Wrong Username / Password, please try again!',
+            [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+            {cancelable: true},
+          );
+        }
+      } else if (error.request) {
+        console.log('Error', error.message);
+      }
+      console.log(error.config);
+    });
   }
   
   render(){
@@ -40,11 +78,7 @@ class PagePassword extends Component {
             style = {{alignSelf: 'center', margin: 30}}
             disabled = {!this.state.password}
             onPress= {() => {
-              console.log(
-                this.props.reduxState.username,
-                this.state.password,
-                base64.encode(this.state.password)
-              )
+              this.onSubmit();
               // Actions.PagePassword();
               // this.props.setUsername(this.state.username);
             }}>
