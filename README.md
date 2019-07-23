@@ -1,6 +1,9 @@
 # React Native Github App
 An app that you can login with your github account, and browse commits history for a git repositoy.
 
+<img src="https://cdn.jsdelivr.net/gh/bimaaghafara/rn_github_app@master/demo.gif" width="250" height="500" alt="" />
+
+
 ## Installing
 Just run :
 ```
