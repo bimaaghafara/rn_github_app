@@ -20,6 +20,15 @@ class PageLogin extends Component {
 		}
 	}
 
+	onChangeUsername = (text) => {
+		this.setState({ username: text })
+	}
+
+	onPressNext = () => {
+		Actions.PagePassword();
+		this.props.setUsername(this.state.username);
+	}
+
 	render() {
 		return (
 			<Container>
@@ -29,18 +38,13 @@ class PageLogin extends Component {
 					</Text>
 					<Item stackedLabel>
 						<Label>Username</Label>
-						<Input onChange={(event) => {
-							this.setState({ username: event.nativeEvent.text });
-						}} />
+						<Input onChange={this.onChangeUsername} />
 					</Item>
 					<Button
 						iconRight
 						style={styles.nextButton}
 						disabled={!this.state.username}
-						onPress={() => {
-							Actions.PagePassword();
-							this.props.setUsername(this.state.username);
-						}}>
+						onPress={this.onPressNext}>
 						<Text>Next</Text>
 						<Icon name='arrow-forward' />
 					</Button>
