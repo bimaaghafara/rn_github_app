@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
+import { StyleSheet } from 'react-native';
 
 // UI
 import { Container, Content, Text, Item, Input, Label, Button, Icon } from 'native-base';
@@ -62,14 +63,14 @@ class PageRepository extends Component {
                 />
                 <Content padder>
                     
-                    <Button style={{alignSelf: 'flex-end'}} iconLeft danger small rounded onPress={() => {
+                    <Button style={styles.logoutButton} iconLeft danger small rounded onPress={() => {
                         AsyncStorage.removeItem('token');
                         Actions.reset('PageLogin')}}>
                         <Icon name='home' />
                         <Text>Logout</Text>
                     </Button>
 
-                    <Text style={{ marginVertical: 20 }}>
+                    <Text style={styles.messageText}>
                         Please enter repository name and click submit to browse commits history!
                     </Text>
                     <Item stackedLabel>
@@ -80,7 +81,7 @@ class PageRepository extends Component {
                     </Item>
                     <Button
                         iconRight
-                        style={{ alignSelf: 'center', margin: 30 }}
+                        style={styles.nextButton}
                         disabled={!this.state.repositoryName}
                         onPress={() => {this.onSubmit()}}>
                         <Text>Next</Text>
@@ -106,3 +107,9 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PageRepository);
+
+const styles = StyleSheet.create({
+    logoutButton: { alignSelf: 'flex-end' },
+    messageText: { marginVertical: 20 },
+    nextButton: { alignSelf: 'center', margin: 30 }
+});
