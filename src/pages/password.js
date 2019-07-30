@@ -85,7 +85,7 @@ class PagePassword extends Component {
           </Text>
           <Item stackedLabel>
             <Label>Password</Label>
-            <Input onChange={this.onChangePassword}/>
+            <Input onChangeText={this.onChangePassword}/>
           </Item>
           <Button
             iconRight

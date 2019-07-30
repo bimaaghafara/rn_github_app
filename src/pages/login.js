@@ -38,7 +38,7 @@ class PageLogin extends Component {
 					</Text>
 					<Item stackedLabel>
 						<Label>Username</Label>
-						<Input onChange={this.onChangeUsername} />
+						<Input onChangeText={this.onChangeUsername} />
 					</Item>
 					<Button
 						iconRight
