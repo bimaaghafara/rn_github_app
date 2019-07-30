@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Alert} from 'react-native';
+import { Alert, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 // UI
@@ -76,7 +76,7 @@ class PagePassword extends Component {
           textContent={'Loading...'}
         />
         <Content padder>
-          <Text style = {{marginVertical: 20}}>
+          <Text style = {styles.messageText}>
             Please enter your github password and click submit to continue! 
           </Text>
           <Item stackedLabel>
@@ -87,7 +87,7 @@ class PagePassword extends Component {
           </Item>
           <Button
             iconRight
-            style = {{alignSelf: 'center', margin: 30}}
+            style = {styles.submitButton}
             disabled = {!this.state.password}
             onPress= {() => {this.onSubmit()}}>
             <Text>Submit</Text>
@@ -111,3 +111,8 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PagePassword);
+
+const styles = StyleSheet.create({
+  messageText: { marginVertical: 20 },
+  submitButton: { alignSelf: 'center', margin: 30 }
+});
