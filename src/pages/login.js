@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { StyleSheet } from 'react-native';
 
 // UI
 import { Container, Content, Text, Item, Input, Label, Button, Icon } from 'native-base';
@@ -23,7 +24,7 @@ class PageLogin extends Component {
 		return (
 			<Container>
 				<Content padder>
-					<Text style={{ marginVertical: 20 }}>
+					<Text style={styles.messageText}>
 						Please enter your github username and click next to continue!
 					</Text>
 					<Item stackedLabel>
@@ -34,7 +35,7 @@ class PageLogin extends Component {
 					</Item>
 					<Button
 						iconRight
-						style={{ alignSelf: 'center', margin: 30 }}
+						style={styles.nextButton}
 						disabled={!this.state.username}
 						onPress={() => {
 							Actions.PagePassword();
@@ -62,3 +63,8 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PageLogin);
+
+const styles = StyleSheet.create({
+	messageText: { marginVertical: 20 },
+	nextButton: { alignSelf: 'center', margin: 30 }
+});

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 // UI
 import { Container, Content, Text, ListItem, Left, Thumbnail, Body, Right, View, Button, Icon } from 'native-base';
