@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
+import {StyleSheet} from 'react-native';
 
 // UI
 import { Container, Content, Text, ListItem, Left, Thumbnail, Body, Right, View, Button, Icon } from 'native-base';
@@ -80,22 +81,26 @@ class PageCommits extends Component {
                 />
                 <Content padder>
                     
-                    <Button style={{alignSelf: 'flex-end'}} iconLeft danger rounded onPress={() => {
+                    <Button style={styles.logoutButton} iconLeft danger rounded onPress={() => {
                         AsyncStorage.removeItem('token');
                         Actions.reset('PageLogin')}}>
                         <Icon name='home' />
                         <Text>Logout</Text>
                     </Button>
 
-                    <Text style={{ marginVertical: 20 }}>
+                    <Text style={styles.repositoryName}>
                         Repository: {this.props.reduxState.repositoryName}
                     </Text>
+
                     {this.props.reduxState.commits.map((commit, index) => 
                         <ListItem avatar key={index}>
                             <Left>
-                                <Thumbnail style={{backgroundColor: '#eee'}} source={{ uri: (commit.author || {}).avatar_url }} />
+                                <Thumbnail
+                                    style={styles.commitAvatar}
+                                    source={{ uri: (commit.author || {}).avatar_url }}
+                                />
                             </Left>
-                            <Body style={{minHeight: 75}}>
+                            <Body style={styles.commitBody}>
                                 <Text>{commit.commit.author.name}</Text>
                                 <Text note>{commit.commit.message}</Text>
                             </Body>
@@ -106,10 +111,10 @@ class PageCommits extends Component {
                       </ListItem>
                     )}
                     
-					<View style={{flexDirection:'row', justifyContent:'center', margin:20}}>
+					<View style={styles.paginationWrapper}>
 						<Button
                             disabled={this.props.reduxState.prevCommits.length === 0}
-                            style={{margin: 5}} iconLeft
+                            style={styles.paginationButton} iconLeft
                             onPress={() => {this.onClickNewer()}}
                         >
 							<Icon name='arrow-back'/>
@@ -117,7 +122,7 @@ class PageCommits extends Component {
 						</Button>
 						<Button
                             disabled={this.props.reduxState.nextCommits.length === 0}
-                            style={{margin: 5}} iconRight
+                            style={styles.paginationButton} iconRight
                             onPress={() => {this.onClickOlder()}}
                         >
 							<Text>Older</Text>
@@ -145,3 +150,12 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PageCommits);
+
+const styles = StyleSheet.create({
+	logoutButton: { alignSelf: 'flex-end' },
+    repositoryName: { marginVertical: 20 },
+    commitAvatar: { backgroundColor: '#eee' },
+    commitBody: {minHeight: 75},
+    paginationWrapper: {flexDirection:'row', justifyContent:'center', margin:20},
+    paginationButton: {margin: 5}
+});
