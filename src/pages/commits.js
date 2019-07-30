@@ -27,6 +27,11 @@ class PageCommits extends Component {
         }
     }
 
+    onPressLogout = () => {
+        AsyncStorage.removeItem('token');
+        Actions.reset('PageLogin')
+    }
+
     async fetchCommits(token, urlParams, reduxAction) {
         Axios.get(
         `https://api.github.com/repos/${this.props.reduxState.repositoryName}/commits${urlParams}`,
@@ -54,14 +59,14 @@ class PageCommits extends Component {
         this.props.showLoader(false)
     }
 
-    async onClickNewer() {
+    onClickNewer = async () => {
         this.props.showLoader(true)
         await this.setState({currentPage: this.state.currentPage-1});
         await this.fetchPaginatedCommits();
         // console.log(this.props.reduxState);
     }
 
-    async onClickOlder() {
+    onClickOlder = async () => {
         this.props.showLoader(true)
         await this.setState({currentPage: this.state.currentPage+1});
         await this.fetchPaginatedCommits();
@@ -81,9 +86,10 @@ class PageCommits extends Component {
                 />
                 <Content padder>
                     
-                    <Button style={styles.logoutButton} iconLeft danger rounded onPress={() => {
-                        AsyncStorage.removeItem('token');
-                        Actions.reset('PageLogin')}}>
+                    <Button
+                        style={styles.logoutButton}
+                        iconLeft danger small rounded
+                        onPress={this.onPressLogout}>
                         <Icon name='home' />
                         <Text>Logout</Text>
                     </Button>
@@ -115,16 +121,14 @@ class PageCommits extends Component {
 						<Button
                             disabled={this.props.reduxState.prevCommits.length === 0}
                             style={styles.paginationButton} iconLeft
-                            onPress={() => {this.onClickNewer()}}
-                        >
+                            onPress={this.onClickNewer}>
 							<Icon name='arrow-back'/>
 							<Text>Newer</Text>
 						</Button>
 						<Button
                             disabled={this.props.reduxState.nextCommits.length === 0}
                             style={styles.paginationButton} iconRight
-                            onPress={() => {this.onClickOlder()}}
-                        >
+                            onPress={this.onClickOlder}>
 							<Text>Older</Text>
 							<Icon name='arrow-forward'/>
 						</Button>

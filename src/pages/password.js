@@ -33,7 +33,11 @@ class PagePassword extends Component {
     return Date.now().toString(32) + randomInt.toString(32);
   }
 
-  async onSubmit() {
+  onChangePassword = (text) => {
+    this.setState({password: text});
+  }
+
+  onSubmit = async () => {
     const authorization = `Basic ${base64.encode(this.props.reduxState.username+':'+this.state.password)}`; 
     this.props.showLoader(true);
     await Axios.post(
@@ -81,15 +85,13 @@ class PagePassword extends Component {
           </Text>
           <Item stackedLabel>
             <Label>Password</Label>
-            <Input onChange={(event) => {
-              this.setState({password: event.nativeEvent.text});
-            }}/>
+            <Input onChangeText={this.onChangePassword}/>
           </Item>
           <Button
             iconRight
             style = {styles.submitButton}
             disabled = {!this.state.password}
-            onPress= {() => {this.onSubmit()}}>
+            onPress= {this.onSubmit}>
             <Text>Submit</Text>
             <Icon type='AntDesign' name='login' />
           </Button>

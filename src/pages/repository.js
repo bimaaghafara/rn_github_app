@@ -25,6 +25,15 @@ class PageRepository extends Component {
         }
     }
 
+    onPressLogout = () => {
+        AsyncStorage.removeItem('token');
+        Actions.reset('PageLogin')
+    }
+
+    onChangeRepositoryName = (text) => {
+        this.setState({ repositoryName: text });
+    }
+
     async fetchCommits(token, urlParams, reduxAction) {
         await Axios.get(
         `https://api.github.com/repos/${this.state.repositoryName}/commits${urlParams}`,
@@ -44,7 +53,7 @@ class PageRepository extends Component {
         });
     }
 
-    async onSubmit() {
+    onSubmit = async () => {
         this.props.showLoader(true);
         const token = await AsyncStorage.getItem('token');
         await this.fetchCommits(token, '?page=1&per_page=10', 'setCommits');
@@ -63,9 +72,10 @@ class PageRepository extends Component {
                 />
                 <Content padder>
                     
-                    <Button style={styles.logoutButton} iconLeft danger small rounded onPress={() => {
-                        AsyncStorage.removeItem('token');
-                        Actions.reset('PageLogin')}}>
+                    <Button
+                        style={styles.logoutButton}
+                        iconLeft danger small rounded
+                        onPress={this.onPressLogout}>
                         <Icon name='home' />
                         <Text>Logout</Text>
                     </Button>
@@ -75,15 +85,13 @@ class PageRepository extends Component {
                     </Text>
                     <Item stackedLabel>
                         <Label>Repository Name</Label>
-                        <Input value={this.state.repositoryName} onChange={(event) => {
-                            this.setState({ repositoryName: event.nativeEvent.text });
-                        }} />
+                        <Input value={this.state.repositoryName} onChangeText={this.onChangeRepositoryName} />
                     </Item>
                     <Button
                         iconRight
                         style={styles.nextButton}
                         disabled={!this.state.repositoryName}
-                        onPress={() => {this.onSubmit()}}>
+                        onPress={this.onSubmit}>
                         <Text>Next</Text>
                         <Icon name='arrow-forward' />
                     </Button>
